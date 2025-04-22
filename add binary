@@ -1,0 +1,33 @@
+class Solution(object):
+    def addBinary(self, a, b):
+        """
+        :type a: str
+        :type b: str
+        :rtype: str
+        """
+        a=a[::-1]
+        b=b[::-1]
+        c=""
+        carry=0
+        for index in range(max(len(a), len(b))):
+            if index>=len(a):
+                index_a=0
+            else:
+                index_a=a[index]
+            if index>=len(b):
+                index_b=0
+            else:
+                index_b=b[index]
+            s=int(index_a)+int(index_b)+carry
+            if s<=1:
+                c+=str(s)
+                carry=0
+            elif s==2:
+                c+="0"
+                carry=1
+            elif s==3:
+                c+="1"
+                carry=1
+        if carry:
+            c+="1"
+        return c[::-1]
