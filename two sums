@@ -1,0 +1,35 @@
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        if nums is None or len(nums) < 2:
+            return None
+
+        first_index = -1
+        second_index = 0
+        end_index = len(nums)
+        found = False
+        for first_num in nums:
+            
+            first_index += 1
+            second_index = first_index + 1
+
+            for x in range(first_index + 1, end_index):
+                second_index = x
+                second_num = nums[second_index]
+
+                #print('Trying firstnum (%s index %s) + secondnum (%s, index %s)' % (str(first_num), str(first_index), str(second_num), str(second_index)))
+                
+                if first_num + second_num == target:
+                    #print('found it')
+                    found = True
+                    break
+
+            if found:
+                break
+        return [first_index, second_index]
+
+            
