@@ -1,0 +1,22 @@
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
+
+class Solution:
+    def swapPairs(self, head_of_list):
+        placeholder_node = ListNode(0)
+        placeholder_node.next = head_of_list
+        previous_node = placeholder_node
+
+        while head_of_list and head_of_list.next:
+            first_node_in_pair = head_of_list
+            second_node_in_pair = head_of_list.next
+            previous_node.next = second_node_in_pair
+            first_node_in_pair.next = second_node_in_pair.next
+            second_node_in_pair.next = first_node_in_pair
+
+            previous_node = first_node_in_pair
+            head_of_list = first_node_in_pair.next
+
+        return placeholder_node.next
