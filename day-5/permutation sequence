@@ -1,0 +1,34 @@
+#Time Complexity : O(NLogN)
+#Space Complexity : O(N)
+
+from sortedcontainers import SortedList
+# https://takeuforward.org/data-structure/find-k-th-permutation-sequence/
+
+class Solution(object):
+    def getPermutation(self, n, k):
+        nums = SortedList(i for i in range(1,n+1)) #O(N)
+
+        fac = 1
+        for i in range(1,n+1): #O(N)
+            fac*=i
+
+        c = k-1
+        ans = ""
+
+        for i in range(n,0,-1): #O(N) * O(LogN)
+            # number of times a number will appear at (n-i) position, eg. for n=4, for index 0 each number will appear 6 times, for index 3 each will appear 2 times etc.
+            fac = fac//i
+            blocksize = fac 
+
+            # for block of size=blocksize, our kth permutation will be inside the block whose index = blockindex
+            blockindex = c//blocksize 
+
+            # remove the number at blockindex from nums (it will always remain sorted), as this number will be at (n-i)th position
+            ans += str(nums.pop(blockindex)) # Time Complexity of removing from SortedList is O(LogN)
+
+            c = c%blocksize
+            
+        return ans
+
+
+        
