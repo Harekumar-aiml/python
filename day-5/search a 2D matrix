@@ -1,0 +1,30 @@
+class Solution(object):
+    def searchMatrix(self, matrix, target):
+        """
+        :type matrix: List[List[int]]
+        :type target: int
+        :rtype: bool
+        """
+        if not matrix or not matrix[0]:
+            return False
+        
+        # Start with binary search on the entire matrix
+        # Treat the 2D matrix as a 1D array, where matrix[i][j] maps to a 1D index.
+        row_count = len(matrix)
+        col_count = len(matrix[0])
+        
+        left, right = 0, row_count * col_count - 1
+        
+        while left <= right:
+            mid = (left + right) // 2
+            # Convert mid index to row and column in the matrix
+            mid_value = matrix[mid // col_count][mid % col_count]
+            
+            if mid_value == target:
+                return True
+            elif mid_value < target:
+                left = mid + 1
+            else:
+                right = mid - 1
+        
+        return False
