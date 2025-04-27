@@ -1,0 +1,38 @@
+def find_sol(cur_elt, candidates, so_far, target):
+    total = 0
+    solutions = []
+    for elt in so_far:
+        total += elt
+    for i, candidate in enumerate(candidates):
+        if i >= cur_elt:
+            new_sum = total + candidate
+            if new_sum == target:
+                solutions.append(so_far + [candidate])
+            elif new_sum <= target:
+                new_solutions = find_sol(i, candidates, so_far + [candidate], target)
+                solutions += new_solutions
+    return solutions
+
+class Solution(object):
+    def combinationSum(self, candidates, target):
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        solutions = []
+        total = 0
+        for i, candidate in enumerate(candidates):
+            if candidate == target:
+                solutions.append([candidate])
+            elif candidate < target:
+                new_solutions = find_sol(i, candidates, [candidate], target)
+                solutions += new_solutions
+        return solutions
+
+if __name__ == "__main__":
+    solution = Solution()
+    candidates = [2, 3, 5]
+    target = 8
+    result = solution.combinationSum(candidates, target)
+    print("Output:", result)
