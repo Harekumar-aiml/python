@@ -1,0 +1,48 @@
+class Solution {
+    public int minCut(String s) {
+        int[] dp = new int[s.length()];  // DP array to store minimum cuts for each index
+        Arrays.fill(dp, -1);  // DP array ko -1 se bhar diya (uncomputed states ko mark karne ke liye)
+        
+        int minCuts = solve(0, s, dp);  // Index 0 se solve karna shuru karo
+        return minCuts - 1;  // 1 minus isliye kar rahe hain kyunki last partition ko cut ki zarurat nahi hoti
+    }
+
+    // Recursive function jo minimum cuts ko solve karegi
+    public int solve(int idx, String s, int[] dp) {
+        if (idx == s.length()) {
+            return 0;  // Agar poori string partition ho gayi, toh aur cut ki zarurat nahi hai
+        }
+
+        if (dp[idx] != -1) {
+            return dp[idx];  // Agar result pehle se calculate hai, toh use hi return kar do
+        }
+
+        int minCuts = Integer.MAX_VALUE;
+
+        // String ke har possible partition point ko loop karke check karo
+        for (int i = idx; i < s.length(); i++) {
+            String sub = s.substring(idx, i + 1);
+            if (isPalindrome(sub)) {
+                // Agar substring palindrome hai, toh bachi hui string ke liye recursive solve karo
+                int cuts = 1 + solve(i + 1, s, dp);  // Is palindrome ke baad 1 cut karenge
+                minCuts = Math.min(cuts, minCuts);  // Minimum cuts ko update karo
+            }
+        }
+
+        dp[idx] = minCuts;  // Result ko dp array me store kar lo
+        return dp[idx];
+    }
+
+    // Function jo check karegi ki string palindrome hai ya nahi
+    public boolean isPalindrome(String s) {
+        int left = 0, right = s.length() - 1;
+        while (left < right) {  // Dono taraf se characters ko check karo
+            if (s.charAt(left) != s.charAt(right)) {
+                return false;  // Agar match nahi kiya, toh palindrome nahi hai
+            }
+            left++;
+            right--;
+        }
+        return true;  // Agar koi mismatch nahi mila, toh palindrome hai
+    }
+}
