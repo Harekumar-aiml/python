@@ -1,0 +1,32 @@
+class Solution(object):
+    def candy(self, ratings):
+
+        candies = [1] * len(ratings) #track candies 
+
+
+        for i in range(len(ratings)-1):
+            if ratings[i] < ratings[i+1]:
+                candies[i+1] = candies[i] + 1
+            elif ratings[i] > ratings[i+1]:
+                if candies[i] < candies[i+1]:
+                    candies[i] += 1
+            else: 
+                #when both are equal
+                pass
+
+        for i in range(len(ratings)-1,0,-1):
+            if ratings[i-1] < ratings[i]:
+                if candies[i] <= candies[i-1]:
+                    candies[i] += 1
+            elif ratings[i-1] > ratings[i]:
+                if candies[i] >= candies[i-1]:
+                    candies[i-1] = candies[i] + 1
+            else: 
+                #when both are equal
+                pass
+
+                
+        return sum(candies)
+
+
+        
