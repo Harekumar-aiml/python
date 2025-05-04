@@ -1,0 +1,43 @@
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, x, next=None, random=None):
+        self.val = int(x)
+        self.next = next
+        self.random = random
+"""
+
+class Solution(object):
+    def copyRandomList(self, head):
+        """
+        :type head: Node
+        :rtype: Node
+        """
+        mapped = {}
+        clonedHead = None
+        # If given no head, return None
+        if not head:
+            return None
+        # Build a 1 to 1 mapping between the previous nodes and the new nodes
+        temp = head
+        while temp:
+            clone = Node(temp.val)
+            if not clonedHead:
+                clonedHead = clone
+            mapped[temp] = clone
+            temp = temp.next
+        # Now that we've established a mapping, when we reference nodes, we can fetch from
+        # the mapping so that way we don't make any duplicates
+        # ie. {node1: clone1, node2: clone2}
+        # So when we want the next value, we just need to access the original.next, and
+        # see what cloned node it is mapped to
+        temp = head
+        while temp:
+            # Map the cloned.next to the next node saved in the mapping
+            if temp.next:
+                mapped[temp].next = mapped[temp.next]
+            # Map the cloned.random to the random node saved in the mapping
+            if temp.random:
+                mapped[temp].random = mapped[temp.random]
+            temp = temp.next
+        return clonedHead
