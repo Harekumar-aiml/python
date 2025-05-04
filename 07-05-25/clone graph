@@ -1,0 +1,11 @@
+class Solution(object):
+    def cloneGraph(self, node):
+        def dfs(n):
+            if n not in clone:
+                clone[n] = Node(n.val)
+                clone[n].neighbors = [dfs(m) for m in n.neighbors]
+            return clone[n]
+
+        clone = {}
+        return dfs(node) if node else None
+        
