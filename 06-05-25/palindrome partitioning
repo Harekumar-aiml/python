@@ -1,0 +1,28 @@
+class Solution(object):
+    def ss(self,s,ind,curr,sa):
+        if ind==len(s):
+            sa.append(curr)
+            return
+        for i in range(ind,len(s)):
+            self.ss(s,i+1,curr+[s[ind:i+1]],sa)
+    
+    def is_pali(self,x):
+        for i in x:
+            if i!=i[::-1]:
+                return False
+        return True
+    def partition(self, s):
+        """
+        :type s: str
+        :rtype: List[List[str]]
+        """
+        sa=[]
+        curr=[]
+        self.ss(s,0,curr,sa)
+        c=[]
+        for i in sa:
+            if self.is_pali(i):
+                c.append(i)
+        return c
+        
+        
